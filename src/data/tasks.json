@@ -1,0 +1,50 @@
+[
+  {
+    "taskName": "setup express backend so I can save to file"
+  },
+  {
+    "taskName": "setup system to read in this file",
+    "checked": true
+  },
+  {
+    "taskName": "set up system to export stringifyed json to clipboard to be pasted in here"
+  },
+  {
+    "taskName": "setup states of checked and unchecked"
+  },
+  {
+    "taskName": "create a list of fields I would want for this",
+    "notes": "time created, time estimate, duration, reoccurring, notes, priority, tags, category, project(Do I really need anything past a tag? Maybe tags need state so that I can sort more granular)"
+  },
+  {
+    "taskName": "figure out system for adding sublist",
+    "notes": "to make this infinite (not sure that is a good idea) a sublist should just be another list with extra tags. No sense in making an additional list system"
+  },
+  {
+    "taskName": "limitations with infinite nesting."
+  },
+  {
+    "taskName": "give all todos unique ids"
+  },
+  {
+    "taskName": "add in a notes section for each task",
+    "checked": true
+  },
+  {
+    "taskName": "create a syncing system",
+    "notes": "I think for now I want to just try and sync it with git and just try and use straight up json files. I think later I could work on a database but I do like the idea of just plain text files for keeping everything so that they aren't locked in to any system. That said. If people could export their lists to markdown or json or whatever then I don't see why that would be much of an issue"
+  },
+  {
+    "taskName": "develop a theme for this"
+  },
+  {
+    "taskName": "make the entire app themeable at some point"
+  },
+  {
+    "taskName": "Make a mobile application",
+    "notes": "Should be able to do this in vue. Just use something like vue native to wrap it. idk I can try it out later"
+  },
+  {
+    "taskName": "add in features I want for my todo list"
+  }
+]

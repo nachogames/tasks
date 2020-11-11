@@ -1,17 +1,33 @@
 <template>
-  <div class="title">Task List</div>
-  <input type="text" v-model="task" @keypress.enter="addTask()" />
-  <button @click="addTask()">
-    Add Task
-  </button>
-  <ul>
-    <li v-for="(task, index) in tasks" :key="index">
-      <Task :task="task" @delete="deleteTask(index)" />
-    </li>
-  </ul>
+  <div id="app">
+    <h1 class="title">Task List</h1>
+    <button @click="printTasksOut()">Print</button>
+    <div class="add-task">
+      <input
+        type="text"
+        v-model="taskDescription"
+        @keypress.enter="addTask()"
+      />
+      <button @click="addTask()">
+        Add Task
+      </button>
+    </div>
+    <ul>
+      <template v-for="task in tasks">
+        <li :key="task.id" v-if="!task.archived">
+          <Task
+            :task="task"
+            @delete="deleteTask(task.id)"
+            @checked="checkOffTask(task.id, $event)"
+          />
+        </li>
+      </template>
+    </ul>
+  </div>
 </template>
 
 <script>
+import tasks from "@/data/newTasks.json";
 import Task from "@/components/Task.vue";
 export default {
   name: "App",
@@ -20,31 +36,77 @@ export default {
   },
   data() {
     return {
-      task: null,
-      tasks: [],
+      taskDescription: null,
+      tasks: tasks,
     };
   },
   methods: {
+    print(val) {
+      console.log(val);
+    },
     addTask() {
-      if (this.task) {
-        this.tasks.push({ taskName: this.task });
-        this.task = null;
+      if (this.taskDescription) {
+        const task = {
+          id: Math.random() * 10 + 1,
+          createdAt: new Date().toUTCString(),
+          description: this.taskDescription,
+          notes: null,
+          dueBy: null,
+          priority: "N",
+          reoccurance: null, //Not sure if this should be in task or later schedule
+          tags: null,
+          sublist: null, //Not sure what do do with this. Maybe it should just be and id for another task??
+          completed: false,
+          archived: false,
+        };
+        this.tasks[task.id] = task;
+        this.taskDescription = null;
       }
     },
-    deleteTask(index) {
-      this.tasks.splice(index, 1);
+    checkOffTask(id, val) {
+      console.log(id, val);
+      this.$set(this.tasks, id, val);
+      // this.tasks[id].completed = val;
+    },
+    deleteTask(id) {
+      this.tasks[id].archived = true;
+    },
+    sortTasks() {
+      // Object.values(this.tasks).sort((a, b) => {
+      //   new Date(a.createdAt) > new Date(b.createdAt);
+      // });
+    },
+    printTasksOut() {
+      console.log(JSON.stringify(this.tasks, null, 2));
     },
   },
 };
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  margin: 0 auto;
   margin-top: 60px;
+  max-width: 800px;
+}
+ul {
+  padding: 0;
+  // margin: 0;
+  li {
+    list-style-type: none;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+}
+.title {
+  text-align: center;
+}
+.add-task {
+  display: flex;
+  justify-content: center;
 }
 </style>
